@@ -9,7 +9,7 @@ export class BagarrePlayingCard extends PlayingCard {
   }
 
   public toImageUrl() {
-    return `${import.meta.env.BASE_URL}/cards/card-${Suit[
+    return `${import.meta.env.BASE_URL}cards/card-${Suit[
       this.suit
     ].toLowerCase()}-${this.cardName + 1}.png`;
   }
