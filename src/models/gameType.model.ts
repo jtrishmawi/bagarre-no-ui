@@ -1,0 +1,63 @@
+import { AceLowRankSet, BaseGameType, CardName, Suit } from "typedeck";
+import { BagarrePlayingCard } from "./index";
+
+export class BagarreGameType extends BaseGameType {
+  public rankSet = new AceLowRankSet();
+  public cardsAllowed = [
+    new BagarrePlayingCard(CardName.Ace, Suit.Clubs, 1),
+    new BagarrePlayingCard(CardName.Two, Suit.Clubs, 2),
+    new BagarrePlayingCard(CardName.Three, Suit.Clubs, 3),
+    new BagarrePlayingCard(CardName.Four, Suit.Clubs, 4),
+    new BagarrePlayingCard(CardName.Five, Suit.Clubs, 5),
+    new BagarrePlayingCard(CardName.Six, Suit.Clubs, 6),
+    new BagarrePlayingCard(CardName.Seven, Suit.Clubs, 7),
+    new BagarrePlayingCard(CardName.Eight, Suit.Clubs, 8),
+    new BagarrePlayingCard(CardName.Nine, Suit.Clubs, 9),
+    new BagarrePlayingCard(CardName.Ten, Suit.Clubs, 10),
+    new BagarrePlayingCard(CardName.Jack, Suit.Clubs, 11),
+    new BagarrePlayingCard(CardName.Queen, Suit.Clubs, 12),
+    new BagarrePlayingCard(CardName.King, Suit.Clubs, 14),
+
+    new BagarrePlayingCard(CardName.Ace, Suit.Spades, 1),
+    new BagarrePlayingCard(CardName.Two, Suit.Spades, 2),
+    new BagarrePlayingCard(CardName.Three, Suit.Spades, 3),
+    new BagarrePlayingCard(CardName.Four, Suit.Spades, 4),
+    new BagarrePlayingCard(CardName.Five, Suit.Spades, 5),
+    new BagarrePlayingCard(CardName.Six, Suit.Spades, 6),
+    new BagarrePlayingCard(CardName.Seven, Suit.Spades, 7),
+    new BagarrePlayingCard(CardName.Eight, Suit.Spades, 8),
+    new BagarrePlayingCard(CardName.Nine, Suit.Spades, 9),
+    new BagarrePlayingCard(CardName.Ten, Suit.Spades, 10),
+    new BagarrePlayingCard(CardName.Jack, Suit.Spades, 11),
+    new BagarrePlayingCard(CardName.Queen, Suit.Spades, 12),
+    new BagarrePlayingCard(CardName.King, Suit.Spades, 14),
+
+    new BagarrePlayingCard(CardName.Ace, Suit.Diamonds, 1),
+    new BagarrePlayingCard(CardName.Two, Suit.Diamonds, 2),
+    new BagarrePlayingCard(CardName.Three, Suit.Diamonds, 3),
+    new BagarrePlayingCard(CardName.Four, Suit.Diamonds, 4),
+    new BagarrePlayingCard(CardName.Five, Suit.Diamonds, 5),
+    new BagarrePlayingCard(CardName.Six, Suit.Diamonds, 6),
+    new BagarrePlayingCard(CardName.Seven, Suit.Diamonds, 7),
+    new BagarrePlayingCard(CardName.Eight, Suit.Diamonds, 8),
+    new BagarrePlayingCard(CardName.Nine, Suit.Diamonds, 9),
+    new BagarrePlayingCard(CardName.Ten, Suit.Diamonds, 10),
+    new BagarrePlayingCard(CardName.Jack, Suit.Diamonds, 11),
+    new BagarrePlayingCard(CardName.Queen, Suit.Diamonds, 12),
+    new BagarrePlayingCard(CardName.King, Suit.Diamonds, 14),
+
+    new BagarrePlayingCard(CardName.Ace, Suit.Hearts, 1),
+    new BagarrePlayingCard(CardName.Two, Suit.Hearts, 2),
+    new BagarrePlayingCard(CardName.Three, Suit.Hearts, 3),
+    new BagarrePlayingCard(CardName.Four, Suit.Hearts, 4),
+    new BagarrePlayingCard(CardName.Five, Suit.Hearts, 5),
+    new BagarrePlayingCard(CardName.Six, Suit.Hearts, 6),
+    new BagarrePlayingCard(CardName.Seven, Suit.Hearts, 7),
+    new BagarrePlayingCard(CardName.Eight, Suit.Hearts, 8),
+    new BagarrePlayingCard(CardName.Nine, Suit.Hearts, 9),
+    new BagarrePlayingCard(CardName.Ten, Suit.Hearts, 10),
+    new BagarrePlayingCard(CardName.Jack, Suit.Hearts, 11),
+    new BagarrePlayingCard(CardName.Queen, Suit.Hearts, 12),
+    new BagarrePlayingCard(CardName.King, Suit.Hearts, 0),
+  ];
+}
