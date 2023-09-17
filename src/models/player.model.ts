@@ -7,7 +7,13 @@ export class BagarrePlayer extends Player {
     super(name, hand);
   }
 
-  public hasLost(game: boolean = true) {
-    this.lost = game;
+  public addToScore(score: number = 1): this {
+    this.score += score;
+    return this;
+  }
+
+  public hasLost(score: number) {
+    this.lost = score <= 0;
+    return this.lost;
   }
 }

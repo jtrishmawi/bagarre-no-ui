@@ -1,0 +1,1 @@
+export { getHandFor } from "./getHandFor";
