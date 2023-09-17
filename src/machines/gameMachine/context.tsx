@@ -9,7 +9,6 @@ export const GameStateContext = createContext(
 
 export const GameStateProvider = ({ children }: { children: ReactNode }) => {
   const gameService = useInterpret(jeuDeBagarreMachine);
-
   return (
     <GameStateContext.Provider value={gameService}>
       {children}

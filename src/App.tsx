@@ -1,10 +1,14 @@
 import { SyntheticEvent } from "react";
+import { useCurrentPlayer, useGameMachine } from "./machines/gameMachine/hooks";
+import { getHandFor } from "./machines/gameMachine/utils";
+import { BagarrePlayingCard } from "./models";
+
 import "./App.css";
-import { useGameMachine } from "./machines/gameMachine/hooks";
-import { BagarreHand, BagarrePlayingCard } from "./models";
 
 function App() {
   const [state, send] = useGameMachine();
+  const currentPlayer = useCurrentPlayer();
+
   const startGame = (e: SyntheticEvent) => {
     e.preventDefault();
     const target = e.target as typeof e.target & {
@@ -16,7 +20,8 @@ function App() {
     });
   };
 
-  const selectTarget = (target: number) => {
+  const selectTarget = (id: string) => {
+    const target = state.context.players.findIndex((p) => p.id === id);
     send({ type: "CHOOSE_TARGET", value: { target } });
   };
 
@@ -59,10 +64,7 @@ function App() {
       )}
       {state.matches("chooseAction") && (
         <>
-          <h2>
-            C'est le tour de{" "}
-            {state.context.players[state.context.currentPlayer].name}
-          </h2>
+          <h2>C'est le tour de {currentPlayer.name}</h2>
           <button
             onClick={() =>
               chooseAction(
@@ -97,31 +99,21 @@ function App() {
       )}
       {state.matches("chooseTarget") && (
         <>
-          <h2>
-            {state.context.players[state.context.currentPlayer].name}, choisis
-            ta cible:
-          </h2>
-          {state.context.players
-            .sort((a) =>
-              a.id ===
-              state.context.players[state.context.currentPlayer].id
-                ? 1
-                : -1
+          <h2>{currentPlayer.name}, choisis ta cible:</h2>
+          {[...state.context.players]
+            .sort((a, b) =>
+              a.id === currentPlayer.id ? -1 : b.id === currentPlayer.id ? 1 : 0
             )
-            .flatMap((player, index) => {
+            .flatMap((player) => {
               if (
                 (state.context.currentPlayerAction?.action === "ATTACK" &&
-                  player.id ===
-                    state.context.players[state.context.currentPlayer].id) ||
-                state.context.players[state.context.currentPlayer].lost
+                  player.id === currentPlayer.id) ||
+                currentPlayer.lost
               )
                 return [];
               return (
-                <button key={player.id} onClick={() => selectTarget(index)}>
-                  {player.id !==
-                  state.context.players[state.context.currentPlayer].id
-                    ? player.name
-                    : "Moi meme"}
+                <button key={player.id} onClick={() => selectTarget(player.id)}>
+                  {player.id !== currentPlayer.id ? player.name : "Moi meme"}
                 </button>
               );
             })}
@@ -129,43 +121,44 @@ function App() {
       )}
       {state.matches("end") && <h2>Player {state.context.winner} wins!</h2>}
       <div style={{ display: "flex" }}>
-        {state.context.players.map((player) => (
-          <div key={player.id}>
-            <h3>
-              {player.name}
-              {player.lost && <span>"Lost"</span>}
-            </h3>
-            <p>Score: {player.score}</p>
-            <dl>
-              <dt>
-                Carte de defense (
-                {(player.getHand() as BagarreHand)?.defenseCard?.value})
-              </dt>
-              <dd>
-                <img
-                  src={(
-                    player.getHand() as BagarreHand
-                  )?.defenseCard?.toImageUrl()}
-                />
-              </dd>
-              <dt>
-                Cartes d'attaques (
-                {(player.getHand() as BagarreHand)?.lifePoints})
-              </dt>
-              <dd>
-                {(player.getHand() as BagarreHand)?.attackCards?.map((card) => (
-                  <img src={card.toImageUrl()} alt={card.toString()} />
-                ))}
-              </dd>
-              <dt>Cartes Coffrees</dt>
-              <dd>
-                {(player.getHand() as BagarreHand)?.keptCards?.map((card) => (
-                  <img src={card.toImageUrl()} alt={card.toString()} />
-                ))}
-              </dd>
-            </dl>
-          </div>
-        ))}
+        {state.context.players.map((player) => {
+          const playerHand = getHandFor(player);
+          return (
+            <div key={player.id}>
+              <h3>
+                {player.name}
+                {player.lost && <span>"Lost"</span>}
+              </h3>
+              <p>Score: {player.score}</p>
+              <dl>
+                <dt>Points de defense ({playerHand.defenseCard?.value})</dt>
+                <dd>
+                  <img src={playerHand.defenseCard?.toImageUrl()} />
+                </dd>
+                <dt>Points de vie ({playerHand.lifePoints})</dt>
+                <dd>
+                  {playerHand.attackCards?.map((card) => (
+                    <img
+                      key={card.toString()}
+                      src={card.toImageUrl()}
+                      alt={card.toString()}
+                    />
+                  ))}
+                </dd>
+                <dt>Cartes Coffrees</dt>
+                <dd>
+                  {playerHand.keptCards?.map((card) => (
+                    <img
+                      key={card.toString()}
+                      src={card.toImageUrl()}
+                      alt={card.toString()}
+                    />
+                  ))}
+                </dd>
+              </dl>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
